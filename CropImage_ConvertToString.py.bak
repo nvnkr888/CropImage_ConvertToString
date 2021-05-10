@@ -1,10 +1,9 @@
 import cv2
 import pytesseract
-import os
 print(os.getcwd())
 import matplotlib.pyplot as plt
-global image,roi
-pytesseract.pytesseract.tesseract_cmd = r'C:\\Program Files\Tesseract-OCR\\tesseract.exe'
+global image
+pytesseract.pytesseract.tesseract_cmd = r'C:\\Program Files\Tesseract-OCR\\tesseract.exe'	
 image = cv2.imread('C:\\Program Files\Tesseract-OCR\loan.jpg')
  
 # Image Crop from Image
@@ -21,7 +20,6 @@ def main():
         # specify the callback function to be called when the user
         # clicks/drags in the 'CapturedImage' window
         cv2.setMouseCallback('CapturedImage', click_and_crop, image)
-       # cv2.destroyAllWindows()
         while True:
             # wait for Esc or q key and then exit
             key = cv2.waitKey(1) & 0xFF
@@ -46,7 +44,7 @@ def click_and_crop(event, x, y, flag, image):
     repeatedly as the user interacts.
     """
     # get access to a couple of global variables we'll need
-    global coords, drawing 
+    global coords, drawing
     if event == cv2.EVENT_LBUTTONDOWN:
         # user has clicked the mouse's left button
         drawing = True
@@ -77,8 +75,6 @@ def click_and_crop(event, x, y, flag, image):
                 # and show the cropped image in a new window
                 cv2.namedWindow("ROI", cv2.WINDOW_NORMAL)
                 cv2.imshow("ROI", roi)
-                txt = pytesseract.image_to_string(roi)
-                print(txt)
-                
-
 main()
+txt = pytesseract.image_to_string(roi)
+print(txt)
